@@ -19,7 +19,7 @@ h1 {
   font-size: 4rem;
   font-weight: 100;
   line-height: 1.1;
-  margin: 4rem auto;
+  /* margin: 4rem auto; */
   max-width: 14rem;
 }
 
@@ -37,4 +37,9 @@ p {
   p {
     max-width: none;
   }
+}
+
+p3 {
+  color: grey;
+  font-size: 1em;
 }
