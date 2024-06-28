@@ -39,7 +39,20 @@ function fill_pref(player_data) {
 const NUM_TEAMS = 3;
 const NUM_VERSIONS = 3;
 
-function run(final, prefs, cucked, visited, is_pri) {
+function includes(final, person) {
+    let found = false;
+    final.forEach((vec, _) => {
+        vec.forEach((player, _) => {
+            if (person == player) {
+                found = true;
+                return;
+            }
+        });
+    });
+    return found;
+}
+
+function run(final, prefs, cucked, is_pri) {
     MAX_POSITION_NO_LIB.forEach((val, pos) => {
         let true_n = val * NUM_TEAMS
         let offset = 0;
@@ -52,14 +65,13 @@ function run(final, prefs, cucked, visited, is_pri) {
         let count = offset;
         for (let i = 0; i < ppl.length; ++i) {
             if (count == true_n) return;
-            if (visited.includes(ppl[i])) continue;
+            if (includes(final, ppl[i])) continue;
 
             final.get(pos).push(ppl[i])
             to_remove.push(ppl[i])
             ++count;
         }
         for (let i = 0; i < to_remove.length; ++i) {
-            visited.push(to_remove[i]);
             if (!is_pri) {
                 cucked.push(to_remove[i])
             }
@@ -108,25 +120,26 @@ export function yup(prefs) {
         shufflePref(secs)
         shufflePref(ters)
         let max_players = NUM_TEAMS * 6;
-        let visited = [];
         let cucked = [];
+        let happiness = 0;
         for (let i = 0; i < 3; ++i) {
             if (i == 0) {
-                run(final, pris, cucked, visited, true);
+                run(final, pris, cucked, true);
             }
             if (i == 1) {
-                run(final, secs, cucked, visited, false);
+                run(final, secs, cucked, false);
             }
             if (i == 2) {
-                run(final, ters, cucked, visited, false);
-                // if (visited.length != max_players) {
-                //     --i;
-                //     continue;
-                // }
+                run(final, ters, cucked, false);
             }
-            if (visited.length == max_players) break;
-            console.log(final, visited, cucked)
+            let count = 0;
+            final.forEach((v, idx) => {
+                count += v.length;
+            });
+            if (i == 0) { happiness = count; }
+            if (count == max_players) break;
         }
+        console.log("version : ", i, happiness)
         teams.push(formatTeams(final));
     }
     return teams;

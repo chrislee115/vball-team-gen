@@ -11,21 +11,6 @@ const valid_headers = {
   "Oppo (1, 2, 3, X)": "Opposite",
   "Lib (1, 2, 3, X)": "Libero"};
 
-
-
-// function generateTeams(prefs) {
-  // let player_data = []
-  // for (let i = 0; i < len; ++i) {
-    // let name = document.getElementById("player-" + i + "-name").value
-    // let pri = document.getElementById("player-" + i + "-primary").value
-    // let sec = document.getElementById("player-" + i + "-secondary").value
-    // let ter = document.getElementById("player-" + i + "-tertiary").value
-    // player_data.push({name: name, pri: pri, sec: sec, ter: ter})
-  // }
-  // return yup(prefs)
-  // yup(num_teams, player_data);
-// } 
-
 function getMapping(csv_data) {
   let mapping = new Map();
   let header = csv_data[0];
@@ -166,18 +151,6 @@ export default function Table({fake_csv}) {
         <br />
       </div>
     }</For>
-    {/* <For each={yurr}>
-        {(item, index) => 
-        <div>
-          <For each={["yur"]}> {(item2, index2) => (
-            <div>
-              <div>{item2}</div>
-              <div>{item}</div>
-            </div>
-          )}</For>
-        </div>
-          // maybe make kma write this shit up
-        }</For> */}
     <button class="generate" type="button" onClick={() => thislanguagesucks(setMaxLen, setTeams, yup(prefs))}>Generate Teams</button>
     </div>
   );
