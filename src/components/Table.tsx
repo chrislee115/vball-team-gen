@@ -75,32 +75,62 @@ function fillPrefs(csv_data, mapping) {
 function padString(str, desired) {
   let offset = desired - str.length;
   let is_even = offset % 2 == 0
-  str.padEnd(Math.floor(offset / 2))
-  str.padStart(Math.floor(offset / 2))
-  if (!is_even) str.padStart(1);
+  str = str.padEnd(Math.floor(offset / 2) + str.length, "`")
+  str = str.padStart(Math.floor(offset / 2) + str.length, "`")
+  if (!is_even) {
+    str = str.padStart(1 + str.length, "`");
+  }
+  return str
 }
 
 function getMaxLen(arr) {
   let max_len = 0;
   for (let i = 0; i < arr.length; ++i) {
     let team_map = arr[i]
-    console.log(team_map)
-    team_map.forEach((v, k) => {
-      for (let j = 0; j < v.length; ++j) {
-        if (v[j].length > max_len) {
-          max_len = v[j].length;
+    team_map.forEach((v, _) => {
+      v.forEach((v2, _) => {
+        for (let j = 0; j < v2.length; ++j) {
+          if (v2[j].length > max_len) {
+            max_len = v2[j].length;
+          }
         }
-      }
+      });
     });
   }
   return max_len
 }
 
-
-
 function thislanguagesucks(setMaxLen, setTeams, teams) {
   setTeams(teams);
   setMaxLen(getMaxLen(teams))
+}
+
+function prettyString(player_map, max_len) {
+  let ans = "|";
+  let headers = ["Setter", "Outside", "Middle", "Opposite"]
+  let head_len = [1, 2, 2, 1]
+  for (let i = 0; i < headers.length; ++i) {
+    for (let j = 0; j < head_len[i]; ++j) {
+      const test = padString(player_map.get(headers[i])[j], max_len)
+      ans += test + "|"
+    }
+  }
+  return ans;
+}
+
+function prettyHeader(headers, max_len) {
+  let ans = "|";
+  for (let i = 0; i < headers.length; ++i) {
+    const test = padString(headers[i], max_len)
+    ans += test + "|"
+  }
+  return ans;
+}
+
+function prettyLine(max_len) {
+  let ans = "";
+  ans = ans.padStart(max_len * 6 + 6, "-")
+  return ans;
 }
 
 export default function Table({fake_csv}) {
@@ -108,6 +138,7 @@ export default function Table({fake_csv}) {
   const [getMaxLen, setMaxLen] = createSignal(0);
   let prefs = {};
   let num_ppl = 0;
+  let yur2 = [];
   if (fake_csv != undefined && fake_csv.data != undefined) {
     let temp = fake_csv.data
     console.log(temp)
@@ -117,12 +148,36 @@ export default function Table({fake_csv}) {
   }
   let num_teams = num_ppl / 3;
   var array = Array.from({length: num_ppl}, (_, i) => i + 1)
+  var headers = ["S", "OH1", "OH2", "M1", "M2", "RS"];
   return (
     <div>
-    <For each={getTeams()}>
-        {(item, index) =>
-          // maybe make kma write this shit up
+    <For each={getTeams()}>{(item, index) =>
+      <div>
+        <div>Set {index() + 1}</div>
+        <p>{prettyLine(getMaxLen())}</p>
+        <p>{prettyHeader(headers, getMaxLen())}</p>
+        <For each={item}>{(item2, index2) =>
+          <div>
+            <p>{prettyLine(getMaxLen())}</p>
+            <p>{prettyString(item2, getMaxLen())}</p>
+          </div>
         }</For>
+        <p>{prettyLine(getMaxLen())}</p>
+        <br />
+      </div>
+    }</For>
+    {/* <For each={yurr}>
+        {(item, index) => 
+        <div>
+          <For each={["yur"]}> {(item2, index2) => (
+            <div>
+              <div>{item2}</div>
+              <div>{item}</div>
+            </div>
+          )}</For>
+        </div>
+          // maybe make kma write this shit up
+        }</For> */}
     <button class="generate" type="button" onClick={() => thislanguagesucks(setMaxLen, setTeams, yup(prefs))}>Generate Teams</button>
     </div>
   );

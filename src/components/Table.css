@@ -92,3 +92,9 @@ border-radius: 50%;
   display: table-cell;
   padding: 50px;
 }
+
+p {
+  font-family: "Lucida Console", "Courier New", monospace;
+  padding: 0px;
+  margin: 0px;
+}

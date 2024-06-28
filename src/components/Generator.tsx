@@ -27,33 +27,9 @@ export default function Generator() {
   }
   return (
     <div>
-      <label for="input-csv">Please choose a CSV file or manually input. <br/><br/></label>
+      <label for="input-csv">Please choose a CSV file. <br/><br/></label>
       <input type="file" onChange={handleFileUpload} accept=".csv"/>
       <form class="generator">
-        {/* <div class="field-block">
-          <label for="num-teams">Number of Teams</label> 
-          <input 
-            name="num-teams"
-            type="int"
-            value="3"
-            required
-            onChange = {(e) => {
-              setTeamCount(Number((e.target as HTMLInputElement).value));
-            }}
-          />
-        </div>
-        <div class="field-block">
-          <label for="players-per-team">Players per Team</label> 
-          <input 
-            name="players-per-team"
-            type="int"
-            value="6"
-            required
-            onChange = {(e) => {
-              setPlayerCount(Number((e.target as HTMLInputElement).value));
-            }}
-          />
-        </div> */}
         <hr/>
         <Show when={csvData()} keyed>
           <Table fake_csv={csvData()} />
