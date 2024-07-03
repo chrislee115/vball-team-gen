@@ -53,7 +53,7 @@ function includes(final, person) {
 }
 
 function run(final, prefs, cucked, is_pri) {
-    MAX_POSITION_NO_LIB.forEach((val, pos) => {
+    MAX_POSITION_LIB.forEach((val, pos) => {
         let true_n = val * NUM_TEAMS
         let offset = 0;
         if (final.get(pos) != undefined) {
@@ -100,7 +100,7 @@ function formatTeams(final) {
     let teams = []
     for (let i = 0; i < NUM_TEAMS; ++i) {
         teams.push(structuredClone(POSITION_TEMPLATE))
-        MAX_POSITION_NO_LIB.forEach((val, pos) => {
+        MAX_POSITION_LIB.forEach((val, pos) => {
             for (let j = 0; j < val; ++j) {
                 teams[i].get(pos).push(final.get(pos)[j + (val * i)]);
             }

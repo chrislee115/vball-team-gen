@@ -92,8 +92,8 @@ function thislanguagesucks(setMaxLen, setTeams, teams) {
 
 function prettyString(player_map, max_len) {
   let ans = "|";
-  let headers = ["Setter", "Outside", "Middle", "Opposite"]
-  let head_len = [1, 2, 2, 1]
+  let headers = ["Setter", "Outside", "Middle", "Libero", "Opposite"]
+  let head_len = [1, 2, 1, 1, 1]
   for (let i = 0; i < headers.length; ++i) {
     for (let j = 0; j < head_len[i]; ++j) {
       const test = padString(player_map.get(headers[i])[j], max_len)
@@ -133,7 +133,7 @@ export default function Table({fake_csv}) {
   }
   let num_teams = num_ppl / 3;
   var array = Array.from({length: num_ppl}, (_, i) => i + 1)
-  var headers = ["S", "OH1", "OH2", "M1", "M2", "RS"];
+  var headers = ["S", "OH1", "OH2", "M", "L", "RS"];
   return (
     <div>
     <For each={getTeams()}>{(item, index) =>
